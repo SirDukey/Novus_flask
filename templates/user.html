@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Home</a>
+    </div>
+
+ <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/thestandard">thestandard</a></li>
+          <li><a href="/pdf2jpg">pdf2jpg</a></li>
+    </div>
+
+
+</nav>
+
+
+<div class="container">
+<p>
+  <div style="background:transparent !important" class="jumbotron text-center">
+    <h1>Novus Group</h1>
+       <div class="lead">We're a South African company specialising in providing News Monitoring, Media Monitoring and Analysis Services.</div>
+       <img src="http://novusonlinenews.co.za/backend/web/assets/img/33.png" height="200px">
+  </div>
+
+</p>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>

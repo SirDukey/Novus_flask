@@ -1,0 +1,13 @@
+[Unit]
+Description=Python ftp server for the Novus_scraper flask application
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /Novus_flask/myftpserver.py
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.service
+
+

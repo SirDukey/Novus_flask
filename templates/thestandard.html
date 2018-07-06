@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+
+</head>
+
+<body>
+
+
+
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Home</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/thestandard">thestandard<span class="sr-only">(current)</span></a></li>
+          <li><a href="/pdf2jpg">pdf2jpg<span class="sr-only">(current)</span></a></li>
+        <!-- <li><a href="#">Link</a></li> -->
+    </div>
+</nav>
+
+
+<p>
+    <div class="container">
+        <form method="POST">
+            <br>
+            <div class="form-group">
+                <label for="url">URL of publication</label>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="paste in the complete URL of the publication"></span>
+                <input type="text" class="form-control" id="url" name="url" placeholder="eg, http://abc.com">
+                 <br>
+            </div>
+            <div class="form-group">
+                <label for="pages">Number of pages</label>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="enter the total number of pages of the publication"></span>
+                <input type="text" class="form-control" id="pages" name="pages" placeholder="eg, 123">
+                <br>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+
+            </div>
+        </form>
+    </div>
+</p>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>

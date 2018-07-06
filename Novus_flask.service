@@ -1,0 +1,11 @@
+[Unit]
+Description=Novus scraper flask application
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /Novus_flask/app.py
+StandardError=journal
+
+[Install]
+WantedBy=mutli-user.target

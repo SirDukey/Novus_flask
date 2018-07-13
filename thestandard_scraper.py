@@ -9,7 +9,7 @@ import sys
 
 def start_scrape(url, pages):
     start_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
-    os.makedirs('downloaded/' + start_time)
+    os.makedirs('/Novus_flask/downloaded/' + start_time)
 
 
     print()
@@ -69,16 +69,16 @@ def start_scrape(url, pages):
                 sys.exit('fatal error')
 
             # label each page with page number
-            browser.save_screenshot('downloaded/{}/page{}.png'.format(start_time, page))
+            browser.save_screenshot('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
 
             # downsize & convert image
-            im = Image.open('downloaded/{}/page{}.png'.format(start_time, page))
+            im = Image.open('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
             im.thumbnail((4000, 4000))
             im = im.convert('RGB')
-            im.save('downloaded/{}/page{}.jpeg'.format(start_time, page))
-            os.unlink('downloaded/{}/page{}.png'.format(start_time, page))
+            im.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
+            os.unlink('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
 
-            original = Image.open('downloaded/{}/page{}.jpeg'.format(start_time, page))
+            original = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
 
             # Crop off black edges
             width, height = im.size
@@ -95,7 +95,7 @@ def start_scrape(url, pages):
             right__a = 1600
             bottom__a = 1960
             cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
-            cropped_example__a.save('downloaded/{}/page{}.jpeg'.format(start_time, page))
+            cropped_example__a.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
 
             # Get the right page
             width_B, height_B = cropped_example.size
@@ -104,7 +104,7 @@ def start_scrape(url, pages):
             right__b = 3200
             bottom__b = 1960
             cropped_example__b = original.crop((left__b, top__b, right__b, bottom__b))
-            cropped_example__b.save('downloaded/{}/page{}.jpeg'.format(start_time, page + 1))
+            cropped_example__b.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page + 1))
             print('saving to file: page{}.jpeg & page{}.jpeg'.format(page, page + 1))
             yield 'saving to file: page{}.jpeg & page{}.jpeg'.format(page, page + 1) + '<br/>\n'
 
@@ -112,15 +112,15 @@ def start_scrape(url, pages):
     browser.quit()
 
     # rename first page
-    if 'page0.jpeg' in os.listdir('downloaded/{}'.format(start_time)):
-        os.unlink('downloaded/{}/page1.jpeg'.format(start_time))
-        shutil.move('downloaded/{}/page0.jpeg'.format(start_time), 'downloaded/{}/page1.jpeg'.format(start_time))
+    if 'page0.jpeg' in os.listdir('/Novus_flask/downloaded/{}'.format(start_time)):
+        os.unlink('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
+        shutil.move('/Novus_flask/downloaded/{}/page0.jpeg'.format(start_time), '/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
 
     # delete last page if page number is odd (black image)
     if pages % 2 != 0:
         print('removing last blank page{}.jpeg'.format(pages))
         yield 'removing last blank page{}.jpeg'.format(pages) + '<br/>\n'
-        os.unlink('downloaded/{}/page{}.jpeg'.format(start_time, pages))
+        os.unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages))
 
 
     print()

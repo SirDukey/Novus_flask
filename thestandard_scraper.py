@@ -5,12 +5,13 @@ from datetime import datetime
 import os
 import shutil
 import sys
+from zipfile import ZipFile
 
 
 def start_scrape(url, pages):
     start_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
-    os.makedirs('/Novus_flask/downloaded/' + start_time)
-
+    down_dir = '/Novus_flask/downloaded/' + start_time
+    os.makedirs(down_dir)
 
     print()
     print('start time:', start_time)
@@ -132,6 +133,15 @@ def start_scrape(url, pages):
     print('start time:', start_time)
     print('end time:', end_time)
     yield 'end time:' + end_time + '<br/>\n'
+    
+    # TODO: zip the directory 
+    '''
+    with ZipFile(down_dir + '.zip', mode='a') as zf:
+        for down_file in os.listdir(down_dir):
+            zf.write(os.listdir(down_file, os.basename(down_file)))
+    yield 'file zipped'
+    '''
+
     yield '<br/>\n'
     yield 'complete'
 

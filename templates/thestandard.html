@@ -1,34 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+{% extends 'layout.html' %}
 
 
-</head>
-
-<body>
-
-
-
-<nav class="navbar navbar-inverse navbar-static-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Home</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/thestandard">thestandard<span class="sr-only">(current)</span></a></li>
-          <li><a href="/pdf2jpg">pdf2jpg<span class="sr-only">(current)</span></a></li>
-        <!-- <li><a href="#">Link</a></li> -->
-    </div>
-</nav>
-
-
+{% block body %}
 <p>
     <div class="container">
         <form method="POST">
@@ -52,7 +25,5 @@
         </form>
     </div>
 </p>
+{% endblock %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-</body>
-</html>

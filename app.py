@@ -2,6 +2,7 @@
 
 from flask import Flask, request, render_template, redirect, url_for, Response, flash, send_file
 import thestandard_scraper
+import joomag_scraper
 import os
 import pdf2jpg
 
@@ -21,6 +22,9 @@ def index():
     user = {'username': 'Mike'}
     return render_template('user.html', title='Scraper', user=user)
 
+
+########################################################################################################################
+# thestandard
 
 @app.route('/downloading')
 def downloading():
@@ -43,7 +47,28 @@ def thestandard():
 
 
 ########################################################################################################################
+# Joomag
 
+@app.route('/joomag_downloading')
+def joomag_downloading():
+    url = request.args['url']
+    pages = request.args['pages']
+
+    return Response(joomag_scraper.start_scrape(url, pages), mimetype='text/html')
+
+
+@app.route('/joomag', methods=['GET', 'POST'])
+def joomag():
+    if request.method == 'POST':
+        url = request.form.get('url')
+        pages = request.form.get('pages')
+        return redirect(url_for('joomag_downloading', title='Joomag', url=url, pages=pages))
+
+    return render_template('joomag.html', title='Joomag', joomag_active='active')
+
+
+########################################################################################################################
+# pdf2jpg
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -85,11 +110,7 @@ def download_file():
 
 
 ########################################################################################################################
-
-
-@app.route('/joomag', methods=['GET', 'POST'])
-def joomag():
-    return render_template('joomag.html', title='Joomag', joomag_active='active')
+# main application
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

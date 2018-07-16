@@ -114,12 +114,13 @@ def start_scrape(url, pages):
     yield 'end time:' + end_time + '<br/>\n'
     
     # TODO: zip the directory 
-
+    '''
     working_dir = '/Novus_flask/downloaded/'
     with ZipFile(start_time + '.zip', mode='a') as zf:
         for f in listdir(working_dir):
             zf.write(working_dir + f, basename(f))
     yield 'file zipped'
+    '''
 
     yield '<br/>\n'
     yield 'complete'

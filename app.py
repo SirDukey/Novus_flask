@@ -39,7 +39,7 @@ def thestandard():
         pages = request.form.get('pages')
         return redirect(url_for('downloading', title='The Standard', url=url, pages=pages))
 
-    return render_template('thestandard.html', title='The Standard')
+    return render_template('thestandard.html', title='The Standard', thestandard_active='active')
 
 
 ########################################################################################################################
@@ -75,7 +75,7 @@ def upload_file():
                 flash('please select a file')
                 return redirect(url_for('upload_file'))
 
-    return render_template('pdf2jpg.html')
+    return render_template('pdf2jpg.html', pdf2jpg_active='active')
 
 
 @app.route('/pdf2jpg/converted.zip')
@@ -86,6 +86,10 @@ def download_file():
 
 ########################################################################################################################
 
+
+@app.route('/joomag', methods=['GET', 'POST'])
+def joomag():
+    return render_template('joomag.html', title='Joomag', joomag_active='active')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

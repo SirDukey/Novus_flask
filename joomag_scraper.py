@@ -96,7 +96,8 @@ def start_scrape(url, pages):
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
     yield 'end time:' + end_time + '<br/>\n'
     
-    # TODO: zip the directory 
+    # TODO: zip the directory
+    '''
     try:
         working_dir = '/Novus_flask/downloaded/'
         zip_dir = '/Novus_flask/zip/'
@@ -106,6 +107,7 @@ def start_scrape(url, pages):
         yield 'file zipped'
     except Exception as e:
         yield str(e)
+    '''
 
     yield '<br/>\n'
     yield 'complete'

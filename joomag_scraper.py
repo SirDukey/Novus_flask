@@ -97,13 +97,15 @@ def start_scrape(url, pages):
     yield 'end time:' + end_time + '<br/>\n'
     
     # TODO: zip the directory 
-
-    working_dir = '/Novus_flask/downloaded/'
-    zip_dir = '/Novus_flask/zip/'
-    with ZipFile(start_time + '.zip', mode='a') as zf:
-        for f in listdir(working_dir):
-            zf.write(zip_dir + f, basename(f))
-    yield 'file zipped'
+    try:
+        working_dir = '/Novus_flask/downloaded/'
+        zip_dir = '/Novus_flask/zip/'
+        with ZipFile(start_time + '.zip', mode='a') as zf:
+            for f in listdir(working_dir):
+                zf.write(zip_dir + f, basename(f))
+        yield 'file zipped'
+    except Exception as e:
+        yield str(e)
 
     yield '<br/>\n'
     yield 'complete'

@@ -59,46 +59,40 @@ def start_scrape(url, pages):
         original = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
 
         # Crop off black edges
-        left = 0
-        top = 0
-        right = 3200
-        bottom = 1960
-        cropped_example = original.crop((left, top, right, bottom))
-
-        # Get the left page
-        left__a = 0
-        top__a = 0
-        right__a = 1600
+        left__a = 550
+        top__a = 15
+        right__a = 3305
         bottom__a = 1960
         cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
         cropped_example__a.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
-
-        # Get the right page
-        left__b = 1600
-        top__b = 0
-        right__b = 3200
-        bottom__b = 1960
-        cropped_example__b = original.crop((left__b, top__b, right__b, bottom__b))
-        cropped_example__b.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page + 1))
-        yield 'saving to file: page{}.jpeg & page{}.jpeg'.format(page, page + 1) + '<br/>\n'
+        yield 'saving to file<br/>\n'
 
         # Next page
-        next_btn = browser.find_element_by_css_selector('div.j-slider-button:nth-child(2)')
-        next_btn.click()
+        try:
+            next_btn = browser.find_element_by_css_selector('div.j-slider-button:nth-child(2)')
+            next_btn.click()
+            yield 'next page<br/>\n'
+        except:
+            yield 'end of pages<br/>\n'
+            break
 
     # close browser only after iteration of all pages is complete
     browser.quit()
 
     # rename first page
+    '''
     if 'page0.jpeg' in os.listdir('/Novus_flask/downloaded/{}'.format(start_time)):
         unlink('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
         move('/Novus_flask/downloaded/{}/page0.jpeg'.format(start_time),
              '/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
+    '''
 
     # delete last page if page number is odd (black image)
+    '''
     if pages % 2 != 0:
         yield 'removing last blank page{}.jpeg'.format(pages) + '<br/>\n'
         unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages))
+    '''
 
     # post start/end time for analysis
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))

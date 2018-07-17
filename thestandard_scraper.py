@@ -124,4 +124,6 @@ def start_scrape(url, pages):
 
     yield '<br/>\n'
     yield 'complete'
+    yield '<br/>\n'
+    yield '<a href=ftp://flask.novusgroup.co.za:2121>ftp://flask.novusgroup.co.za:2121</a>'
 

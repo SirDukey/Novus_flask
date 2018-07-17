@@ -99,9 +99,10 @@ def start_scrape(url, pages):
     # TODO: zip the directory 
 
     working_dir = '/Novus_flask/downloaded/'
+    zip_dir = '/Novus_flask/zip/'
     with ZipFile(start_time + '.zip', mode='a') as zf:
         for f in listdir(working_dir):
-            zf.write(working_dir + f, basename(f))
+            zf.write(zip_dir + f, basename(f))
     yield 'file zipped'
 
     yield '<br/>\n'

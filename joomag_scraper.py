@@ -32,7 +32,9 @@ def start_scrape(url, pages):
 
         # close subscription pop-up
         try:
+            sleep(1)
             popup_x = browser.find_element_by_xpath('/html/body/div[1]/div/div[3]/div[1]/div[1]/span')
+            sleep(1)
             popup_x.click()
         except Exception as e:
             yield str(e)
@@ -40,6 +42,7 @@ def start_scrape(url, pages):
         # click on fullscreen button
         fullscreen_btn = browser.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/div[1]/div[2]')
         fullscreen_btn.click()
+        sleep(1)
 
         # iterate over the total number of pages and capture
         for page in range(0, int(pages)):

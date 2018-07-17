@@ -46,60 +46,58 @@ def start_scrape(url, pages):
 
         # iterate over the total number of pages and capture
         for page in range(0, int(pages)):
+            if page % 2 == 0:
 
-            browser.set_window_size(4000, 2000)
-            sleep(5)
-            yield 'rendering page<br/>\n'
+                browser.set_window_size(4000, 2000)
+                sleep(5)
+                yield 'rendering page<br/>\n'
 
-            # label each page with page number
-            browser.save_screenshot('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
+                # label each page with page number
+                browser.save_screenshot('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
 
-            # downsize & convert image
-            im = Image.open('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
-            im.thumbnail((4000, 4000))
-            im = im.convert('RGB')
-            im.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
-            unlink('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
+                # downsize & convert image
+                im = Image.open('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
+                im.thumbnail((4000, 4000))
+                im = im.convert('RGB')
+                im.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
+                unlink('/Novus_flask/downloaded/{}/page{}.png'.format(start_time, page))
 
-            original = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
+                original = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
 
-            # Crop off black edges
-            left__a = 550
-            top__a = 15
-            right__a = 3305
-            bottom__a = 1960
-            cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
-            cropped_example__a.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
-            yield 'saving to file<br/>\n'
+                # Get the left page
+                left__a = 550
+                top__a = 15
+                right__a = 1930
+                bottom__a = 1960
+                cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
+                cropped_example__a.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
+                yield 'saving to file<br/>\n'
 
-            # Next page
-            try:
-                next_btn = browser.find_element_by_css_selector('div.j-slider-button:nth-child(2)')
-                next_btn.click()
-                yield 'next page<br/>\n'
-            except:
-                yield 'end of pages<br/>\n'
-                break
+                # Get the right page
+                left__b = 1930
+                top__b = 0
+                right__b = 3306
+                bottom__b = 1960
+                cropped_example__b = original.crop((left__b, top__b, right__b, bottom__b))
+                cropped_example__b.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page + 1))
+                yield 'saving to file: page{}.jpeg & page{}.jpeg'.format(page, page + 1) + '<br/>\n'
+
+                # Next page
+                try:
+                    next_btn = browser.find_element_by_css_selector('div.j-slider-button:nth-child(2)')
+                    next_btn.click()
+                    yield 'next page<br/>\n'
+                except:
+                    yield 'end of pages<br/>\n'
+                    break
 
         # close browser only after iteration of all pages is complete
         browser.quit()
     except Exception as e:
         yield str(e)
 
-    # rename first page
-    '''
-    if 'page0.jpeg' in os.listdir('/Novus_flask/downloaded/{}'.format(start_time)):
-        unlink('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
-        move('/Novus_flask/downloaded/{}/page0.jpeg'.format(start_time),
-             '/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
-    '''
-
-    # delete last page if page number is odd (black image)
-    '''
-    if pages % 2 != 0:
-        yield 'removing last blank page{}.jpeg'.format(pages) + '<br/>\n'
-        unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages))
-    '''
+    # TODO join the first two and last two pages
+    # TODO crop the dark edges from the new first and new last pages
 
     # post start/end time for analysis
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))

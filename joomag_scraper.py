@@ -11,7 +11,7 @@ from os.path import basename
 
 
 def start_scrape(url, pages):
-    start_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
+    start_time = 'Joomag__' + str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
     down_dir = '/Novus_flask/downloaded/' + start_time
     makedirs(down_dir)
 
@@ -110,4 +110,5 @@ def start_scrape(url, pages):
     yield '<br/>\n'
     yield 'complete'
     yield '<br/>\n'
-    yield '<a href=ftp://flask.novusgroup.co.za:2121>ftp://flask.novusgroup.co.za:2121</a>'
+    yield '<a href=ftp://flask.novusgroup.co.za:2121/{}>' \
+          'ftp://flask.novusgroup.co.za:2121/{}</a>'.format(start_time, start_time)

@@ -11,7 +11,7 @@ from os.path import basename
 
 
 def start_scrape(url, pages):
-    start_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
+    start_time = 'Joomag__' + str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
     down_dir = '/Novus_flask/downloaded/' + start_time
     makedirs(down_dir)
 

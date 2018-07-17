@@ -2,12 +2,12 @@ from selenium import webdriver
 from time import sleep
 from PIL import Image
 from datetime import datetime
-import os
-from shutil import move
-import sys
-from zipfile import ZipFile
+#import os
+#from shutil import move
+#import sys
+#from zipfile import ZipFile
 from os import listdir, unlink, makedirs
-from os.path import basename
+#from os.path import basename
 
 
 def start_scrape(url, pages):
@@ -36,8 +36,6 @@ def start_scrape(url, pages):
     # click on fullscreen button
     fullscreen_btn = browser.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/div[1]/div[2]')
     fullscreen_btn.click()
-
-    #pages = int(pages) / 2
 
     # iterate over the total number of pages and capture
     for page in range(0, int(pages)):

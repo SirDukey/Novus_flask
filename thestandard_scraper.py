@@ -5,9 +5,9 @@ from datetime import datetime
 import os
 from shutil import move
 import sys
-from zipfile import ZipFile
+#from zipfile import ZipFile
 from os import listdir, unlink, makedirs
-from os.path import basename
+#from os.path import basename
 
 
 def start_scrape(url, pages):

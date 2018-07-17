@@ -8,7 +8,7 @@ from pyftpdlib.servers import FTPServer
 def myftpserv():
     authorizer = DummyAuthorizer()
     authorizer.add_user('library', 'library', '/Novus_flask/downloaded', perm='elradfmwMT')
-    # authorizer.add_anonymous('downloaded')
+    authorizer.add_anonymous('/Novus_flask/downloaded')
     handler = FTPHandler
     handler.authorizer = authorizer
     address = ('', 2121)

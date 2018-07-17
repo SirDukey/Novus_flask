@@ -31,8 +31,11 @@ def start_scrape(url, pages):
         browser.set_window_size(2000, 2000)
 
         # close subscription pop-up
-        popup_x = browser.find_element_by_xpath('/html/body/div[1]/div/div[3]/div[1]/div[1]/span')
-        popup_x.click()
+        try:
+            popup_x = browser.find_element_by_xpath('/html/body/div[1]/div/div[3]/div[1]/div[1]/span')
+            popup_x.click()
+        except Exception as e:
+            yield str(e)
 
         # click on fullscreen button
         fullscreen_btn = browser.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/div[1]/div[2]')
@@ -98,9 +101,8 @@ def start_scrape(url, pages):
     # post start/end time for analysis
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
     yield 'end time:' + end_time + '<br/>\n'
-    
-    # TODO: zip the directory
 
+    # zip the files and remove the jpeg images
     try:
         working_dir = '/Novus_flask/downloaded/' + start_time + '/'
         zip_dir = '/Novus_flask/zip/'
@@ -119,4 +121,4 @@ def start_scrape(url, pages):
     yield 'complete'
     yield '<br/>\n'
     yield '<a href=ftp://flask.novusgroup.co.za:2121/{}/{}>' \
-          'download file/</a>'.format(start_time, start_time + '.zip')
+          'download file</a>'.format(start_time, start_time + '.zip')

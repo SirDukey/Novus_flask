@@ -97,16 +97,15 @@ def start_scrape(url, pages):
     yield 'end time:' + end_time + '<br/>\n'
     
     # TODO: zip the directory 
-    '''
+
     working_dir = '/Novus_flask/downloaded/'
     with ZipFile(start_time + '.zip', mode='a') as zf:
         for f in listdir(working_dir):
             zf.write(working_dir + f, basename(f))
     yield 'file zipped'
-    '''
 
     yield '<br/>\n'
     yield 'complete'
     yield '<br/>\n'
-    yield '<a href=ftp://flask.novusgroup.co.za:2121/{}>' \
-          'ftp://flask.novusgroup.co.za:2121/{}</a>'.format(start_time, start_time)
+    yield '<a href=ftp://flask.novusgroup.co.za:2121/>' \
+          'ftp://flask.novusgroup.co.za:2121/</a>'

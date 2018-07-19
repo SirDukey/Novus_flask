@@ -2,9 +2,7 @@ from selenium import webdriver
 from time import sleep
 from PIL import Image
 from datetime import datetime
-import os
 from shutil import move
-import sys
 from zipfile import ZipFile
 from os import listdir, unlink, makedirs
 from os.path import basename

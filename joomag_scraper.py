@@ -121,6 +121,7 @@ def start_scrape(url, pages):
             cropped.save('page{}.jpeg'.format(pageNum[1]))
             unlink('page{}.jpeg'.format(pageNum[0]))
 
+    pages = pages + 1
     first_pages = pageClass((0, 1))
     last_pages = pageClass((pages - 1, pages))
 

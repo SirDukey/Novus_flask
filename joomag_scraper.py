@@ -120,6 +120,7 @@ def start_scrape(url, pages):
             cropped = single_im.crop(box)
             cropped.save('page{}.jpeg'.format(pageNum[1]))
             unlink('page{}.jpeg'.format(pageNum[0]))
+            yield 'pages joined and cropped<br/>\n'
 
     pages = pages + 1
     first_pages = pageClass((0, 1))

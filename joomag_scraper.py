@@ -122,7 +122,7 @@ def start_scrape(url, pages):
             unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[0]))
             yield 'pages joined and cropped<br/>\n'
 
-    pages = pages + 1
+    #pages = pages + 1
     first_pages = pageClass((0, 1))
     last_pages = pageClass((pages - 1, pages))
 

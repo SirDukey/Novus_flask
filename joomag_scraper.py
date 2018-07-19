@@ -9,12 +9,13 @@ from zipfile import ZipFile
 from os import listdir, unlink, makedirs
 from os.path import basename
 
-start_time = 'Joomag__' + str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
-
 
 def start_scrape(url, pages):
-    try:
 
+    start_time = 'Joomag__' + str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
+    pages = int(pages) + 1
+
+    try:
         down_dir = '/Novus_flask/downloaded/' + start_time
         makedirs(down_dir)
 
@@ -28,7 +29,7 @@ def start_scrape(url, pages):
                                    chrome_options=chrome_options)
 
         yield 'scraping url: ' + url + '<br/>\n'
-        yield 'attempting to scrape {} pages<br/>\n'.format(pages)
+        yield 'attempting to scrape {} pages<br/>\n'.format(pages - 1)
         browser.get(url)
         browser.set_window_size(2000, 2000)
 
@@ -48,7 +49,7 @@ def start_scrape(url, pages):
         sleep(1)
 
         # iterate over the total number of pages and capture
-        for page in range(0, int(pages)):
+        for page in range(0, pages):
             if page % 2 == 0:
 
                 browser.set_window_size(4000, 2000)
@@ -74,7 +75,6 @@ def start_scrape(url, pages):
                 bottom__a = 1960
                 cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
                 cropped_example__a.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, page))
-                yield 'saving to file<br/>\n'
 
                 # Get the right page
                 left__b = 1930
@@ -102,37 +102,35 @@ def start_scrape(url, pages):
         yield 'click on the back button and retry...<br/>\n'
 
     # join the first two pages and crop
-    class pageClass(object):
-        def __init__(self, pageNum):
-            self.pageNum = pageNum
+    first_im = Image.open('/Novus_flask/downloaded/{}/page0.jpeg'.format(start_time))
+    second_im = Image.open('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
+    size = first_im.size
+    width = size[0] * 2
+    height = size[1]
+    size = width, height
+    single_im = Image.new('RGB', size, 'white')
+    single_im.paste(first_im)
+    single_im.paste(second_im, (1380, 0))
+    box = (694, 0, 2064, 1960)
+    cropped = single_im.crop(box)
+    cropped.save('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
+    unlink('/Novus_flask/downloaded/{}/page0.jpeg'.format(start_time))
 
-        def join_and_crop(self, pageNum):
-            first_im = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[0]))
-            second_im = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[1]))
-            size = first_im.size
-            width = size[0] * 2
-            height = size[1]
-            size = width, height
-            single_im = Image.new('RGB', size, 'white')
-            single_im.paste(first_im)
-            single_im.paste(second_im, (1380, 0))
-            box = (694, 0, 2064, 1960)
-            cropped = single_im.crop(box)
-            cropped.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[1]))
-            unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[0]))
-            yield 'pages joined and cropped<br/>\n'
-
-    #pages = pages + 1
-    first_pages = pageClass((0, 1))
-    last_pages = pageClass((pages - 1, pages))
-
-    try:
-        first_pages.join_and_crop(pageNum=(0, 1))
-        last_pages.join_and_crop(pageNum=(pages - 1, pages))
-        move('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages), '/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages - 1))
-    except Exception as e:
-        yield str(e) + '<br/>\n'
-        yield 'click on the back button and retry...<br/>\n'
+    # join the last two pages and crop
+    first_im = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages - 1))
+    second_im = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages))
+    size = first_im.size
+    width = size[0] * 2
+    height = size[1]
+    size = width, height
+    single_im = Image.new('RGB', size, 'white')
+    single_im.paste(first_im)
+    single_im.paste(second_im, (1380, 0))
+    box = (694, 0, 2064, 1960)
+    cropped = single_im.crop(box)
+    cropped.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages -1))
+    unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages))
+    yield 'pages joined and cropped<br/>\n'
 
     # post start/end time for analysis
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))

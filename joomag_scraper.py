@@ -107,8 +107,8 @@ def start_scrape(url, pages):
             self.pageNum = pageNum
 
         def join_and_crop(self, pageNum):
-            first_im = Image.open('page{}.jpeg'.format(pageNum[0]))
-            second_im = Image.open('page{}.jpeg'.format(pageNum[1]))
+            first_im = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[0]))
+            second_im = Image.open('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[1]))
             size = first_im.size
             width = size[0] * 2
             height = size[1]
@@ -118,8 +118,8 @@ def start_scrape(url, pages):
             single_im.paste(second_im, (1380, 0))
             box = (694, 0, 2064, 1960)
             cropped = single_im.crop(box)
-            cropped.save('page{}.jpeg'.format(pageNum[1]))
-            unlink('page{}.jpeg'.format(pageNum[0]))
+            cropped.save('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[1]))
+            unlink('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pageNum[0]))
             yield 'pages joined and cropped<br/>\n'
 
     pages = pages + 1
@@ -129,7 +129,7 @@ def start_scrape(url, pages):
     try:
         first_pages.join_and_crop(pageNum=(0, 1))
         last_pages.join_and_crop(pageNum=(pages - 1, pages))
-        move('page{}.jpeg'.format(pages), 'page{}.jpeg'.format(pages - 1))
+        move('/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages), '/Novus_flask/downloaded/{}/page{}.jpeg'.format(start_time, pages - 1))
     except Exception as e:
         yield str(e) + '<br/>\n'
         yield 'click on the back button and retry...<br/>\n'

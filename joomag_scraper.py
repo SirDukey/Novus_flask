@@ -9,10 +9,12 @@ from zipfile import ZipFile
 from os import listdir, unlink, makedirs
 from os.path import basename
 
+start_time = 'Joomag__' + str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
+
 
 def start_scrape(url, pages):
     try:
-        start_time = 'Joomag__' + str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))
+
         down_dir = '/Novus_flask/downloaded/' + start_time
         makedirs(down_dir)
 
@@ -67,7 +69,7 @@ def start_scrape(url, pages):
 
                 # Get the left page
                 left__a = 550
-                top__a = 0
+                top__a = 15
                 right__a = 1930
                 bottom__a = 1960
                 cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
@@ -76,7 +78,7 @@ def start_scrape(url, pages):
 
                 # Get the right page
                 left__b = 1930
-                top__b = 0
+                top__b = 15
                 right__b = 3306
                 bottom__b = 1960
                 cropped_example__b = original.crop((left__b, top__b, right__b, bottom__b))
@@ -94,14 +96,37 @@ def start_scrape(url, pages):
 
         # close browser only after iteration of all pages is complete
         browser.quit()
+
     except Exception as e:
         yield str(e) + '<br/>\n'
         yield 'click on the back button and retry...<br/>\n'
 
-    # TODO join the first two and last two pages
+    # join the first two pages and crop
+    class pageClass(object):
+        def __init__(self, pageNum):
+            self.pageNum = pageNum
 
+        def join_and_crop(self, pageNum):
+            first_im = Image.open('page{}.jpeg'.format(pageNum[0]))
+            second_im = Image.open('page{}.jpeg'.format(pageNum[1]))
+            size = first_im.size
+            width = size[0] * 2
+            height = size[1]
+            size = width, height
+            single_im = Image.new('RGB', size, 'white')
+            single_im.paste(first_im)
+            single_im.paste(second_im, (1380, 0))
+            box = (694, 0, 2064, 1960)
+            cropped = single_im.crop(box)
+            cropped.save('page{}.jpeg'.format(pageNum[1]))
+            unlink('page{}.jpeg'.format(pageNum[0]))
 
-    # TODO crop the dark edges from the new first and new last pages
+    first_pages = pageClass((0, 1))
+    last_pages = pageClass((pages - 1, pages))
+
+    first_pages.join_and_crop(pageNum=(0, 1))
+    last_pages.join_and_crop(pageNum=(pages - 1, pages))
+
 
     # post start/end time for analysis
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))

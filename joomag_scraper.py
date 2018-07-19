@@ -125,9 +125,13 @@ def start_scrape(url, pages):
     first_pages = pageClass((0, 1))
     last_pages = pageClass((pages - 1, pages))
 
-    first_pages.join_and_crop(pageNum=(0, 1))
-    last_pages.join_and_crop(pageNum=(pages - 1, pages))
-    move('page{}.jpeg'.format(pages), 'page{}.jpeg'.format(pages - 1))
+    try:
+        first_pages.join_and_crop(pageNum=(0, 1))
+        last_pages.join_and_crop(pageNum=(pages - 1, pages))
+        move('page{}.jpeg'.format(pages), 'page{}.jpeg'.format(pages - 1))
+    except Exception as e:
+        yield str(e) + '<br/>\n'
+        yield 'click on the back button and retry...<br/>\n'
 
     # post start/end time for analysis
     end_time = str(datetime.now().strftime('%d-%m-%Y__%H:%M:%S'))

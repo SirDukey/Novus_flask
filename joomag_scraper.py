@@ -37,7 +37,8 @@ def start_scrape(url, pages):
             sleep(1)
             popup_x.click()
         except Exception as e:
-            yield str(e)
+            yield str(e) + '<br/>\n'
+            yield 'click on the back button and retry...<br/>\n'
 
         # click on fullscreen button
         fullscreen_btn = browser.find_element_by_xpath('/html/body/div[1]/div/div[1]/div[1]/div[1]/div[2]')
@@ -66,7 +67,7 @@ def start_scrape(url, pages):
 
                 # Get the left page
                 left__a = 550
-                top__a = 15
+                top__a = 0
                 right__a = 1930
                 bottom__a = 1960
                 cropped_example__a = original.crop((left__a, top__a, right__a, bottom__a))
@@ -94,9 +95,12 @@ def start_scrape(url, pages):
         # close browser only after iteration of all pages is complete
         browser.quit()
     except Exception as e:
-        yield str(e)
+        yield str(e) + '<br/>\n'
+        yield 'click on the back button and retry...<br/>\n'
 
     # TODO join the first two and last two pages
+
+
     # TODO crop the dark edges from the new first and new last pages
 
     # post start/end time for analysis

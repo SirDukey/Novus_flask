@@ -20,7 +20,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 @app.route('/')
 def index():
     user = {'username': 'Mike'}
-    return render_template('user.html', title='Scraper', user=user)
+    return render_template('user.html', title='Novus Flask', user=user)
 
 
 ########################################################################################################################

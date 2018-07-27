@@ -13,7 +13,7 @@ original_zipfile = '/Novus_flask/zip/converted.zip'
 def convert2pdf(pdf):
     jpg = splitext(pdf)[0] + ".jpg"
     with Pool(processes=20) as pool:
-        pool.map(check_call(["convert", "-quality", "100%", "-density", "600", pdf, jpg]))
+        pool.map(check_call(["convert", "-quality", "100%", "-density", "300", pdf, jpg]))
     unlink(pdf)
     if original_zipfile:
         unlink(original_zipfile)

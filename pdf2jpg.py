@@ -10,7 +10,7 @@ def convert2pdf(pdf, publication, ts):
     print(publication_ts)
     working_dir = '/Novus_flask/uploaded/{}'.format(publication_ts)
     makedirs('/Novus_flask/zip/{}'.format(publication_ts))
-    original_zipfile = '/Novus_flask/zip/{}/converted.zip'.format(publication_ts)
+    # original_zipfile = '/Novus_flask/zip/{}/converted.zip'.format(publication_ts)
     jpg = splitext(pdf)[0] + ".jpg"
     check_call(["convert", "-quality", "100%", "-density", "300", pdf, jpg])
     unlink(pdf)

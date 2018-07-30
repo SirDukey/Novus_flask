@@ -13,23 +13,18 @@
             <div class="form-group">
                 <label for="file">PDF file.</label>
                 <input type=file id="file" name=file>
-                <!--<p class="help-block">Choose the file to upload.</p>-->
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Convert" name="action">
-
                 {% with messages = get_flashed_messages() %}
                   {% if messages %}
                     {% for message in messages %}
                       {% if 'converted successfully' in message %}
-                    <a href="/pdf2jpg/{{ publication }}.zip">
-                        <button type="button" class="btn btn-primary">Download</button>
-                    </a>
+                        <input type="submit" class="btn btn-primary" value="{{ publication }}" name=publication_download>
                       {% endif %}
                     {% endfor %}
                   {% endif %}
                 {% endwith %}
-
             </div>
         </form>
     </div>

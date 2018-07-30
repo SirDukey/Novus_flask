@@ -5,7 +5,7 @@ import thestandard_scraper
 import joomag_scraper
 import os
 import pdf2jpg
-from os import makedirs
+from os import makedirs, unlink
 import time
 
 app = Flask(__name__)
@@ -82,20 +82,26 @@ def upload_file():
     ts = time.time()
     ts = str(ts).split('.')[1]
     publication = request.form.get('publication')
+    publication_download = request.form.get('publication_download')
     path_filename = '/Novus_flask/uploaded/' + str(publication)
     if request.method == 'POST':
         try:
+            if publication_download:
+                try:
+                    return send_file('zip/{}.zip'.format(publication_download),
+                                     as_attachment=True,
+                                     attachment_filename=publication_download + '.zip')
+                finally:
+                    unlink('zip/{}.zip'.format(publication_download))
             file = request.files['file']
             if file and allowed_file(file.filename):
                 filename = file.filename
-
                 makedirs(path_filename + ts)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + publication + ts, filename))
                 filename = path_filename + ts + '/' + filename
                 flash(file.filename + ' converted successfully')
                 pdf2jpg.convert2pdf(filename, publication, ts)
                 return redirect(url_for('upload_file'))
-
             else:
                 flash('only pdf file type allowed')
                 return redirect(url_for('upload_file'))
@@ -106,12 +112,6 @@ def upload_file():
 
     publication = str(publication) + ts
     return render_template('pdf2jpg.html', pdf2jpg_active='active', publication=publication)
-
-
-@app.route('/pdf2jpg/{{ publication }}.zip')
-def download_file():
-
-    return send_file('zip/{{ publication }}.zip')
 
 
 ########################################################################################################################

@@ -4,7 +4,12 @@
 <p>
     <div class="container">
         <form action="" method="POST" enctype="multipart/form-data">
-            <br>
+            <div class="form-group">
+                <label for="publication">Publication name</label>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true" title="enter a name for the publication"></span>
+                <input type="text" class="form-control" id="publication" name=publication placeholder="">
+                 <br>
+            </div>
             <div class="form-group">
                 <label for="file">PDF file.</label>
                 <input type=file id="file" name=file>
@@ -17,7 +22,7 @@
                   {% if messages %}
                     {% for message in messages %}
                       {% if 'converted successfully' in message %}
-                    <a href="/pdf2jpg/converted.zip">
+                    <a href="/pdf2jpg/{{ publication }}.zip">
                         <button type="button" class="btn btn-primary">Download</button>
                     </a>
                       {% endif %}
@@ -35,7 +40,8 @@
 
 <p class="text-center jumbotron">
     <strong>This tool will convert PDF files to JPEG.</strong></br ></br >
-    First click browse and select your PDF file</br >
+    First enter a publication name</br >
+    Then click browse and select your PDF file</br >
     Click on the 'convert' button</br >
     When complete, a 'download' button will appear</br >
     Click 'download' and save the converted.zip file to your pc</br >

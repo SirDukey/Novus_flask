@@ -88,7 +88,7 @@ def upload_file():
         try:
             if publication_download:
                 try:
-                    return send_file('zip/{}.zip'.format(publication_download),
+                    return send_file('/Novus_flask/zip/{}.zip'.format(publication_download),
                                      as_attachment=True,
                                      attachment_filename=publication_download + '.zip')
                 finally:

@@ -112,7 +112,7 @@ def start_scrape(url, pages):
     size = width, height
     single_im = Image.new('RGB', size, 'white')
     single_im.paste(first_im)
-    single_im.paste(second_im, (1380, 0))
+    single_im.paste(second_im, (1376, 0))
     box = (694, 0, 2064, 1960)
     cropped = single_im.crop(box)
     cropped.save('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))

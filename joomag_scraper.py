@@ -102,6 +102,10 @@ def start_scrape(url, pages):
     # join the first two pages and crop
     first_im = Image.open('/Novus_flask/downloaded/{}/page0.jpeg'.format(start_time))
     second_im = Image.open('/Novus_flask/downloaded/{}/page1.jpeg'.format(start_time))
+
+    print(first_im.size)
+    print(second_im.size)
+
     size = first_im.size
     width = size[0] * 2
     height = size[1]

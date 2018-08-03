@@ -107,8 +107,6 @@ def start_scrape(url, pages):
     height = size[1]
     size = width, height
     single_im = Image.new('RGB', size, 'white')
-    print('first image:', first_im.size)
-    print('new image:', single_im.size)
     single_im.paste(first_im, (0, 0))
     single_im.paste(second_im, (1380, 0))
     box = (694, 0, 2064, 1960)

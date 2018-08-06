@@ -16,3 +16,7 @@ Monitor the applications using journalctl -u Novus_flask or journalctl -u myftps
 6. pyftpdlib python module
 7. Flask python module
 
+Make 3 folders called for the application to work called:
+* zip
+* uploaded
+* download

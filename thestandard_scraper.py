@@ -55,7 +55,7 @@ def start_scrape(url, pages):
                     elem = browser.find_element_by_xpath('//*[@id="landscape"]')
                     elem.click()
                     elem.click()
-                    sleep(5)
+                    sleep(10)
                 except Exception as e:
                     yield str(e)
                     sys.exit('fatal error')
